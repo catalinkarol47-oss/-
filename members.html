@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Члены клана | xXKnightXx</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Члены клана xXKnightXx</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="rules.html">Правила</a>
+    <a href="members.html">Члены клана</a>
+    <a href="support.html">Поддержка</a>
+    <a href="donate.html">Донат</a>
+  </nav>
+
+  <main>
+    <section class="section animated">
+      <h2>👥 Состав клана</h2>
+      <div class="members-sidebar">
+        <ul class="members-list" id="membersList">
+          <!-- Сюда будет загружено из members.json -->
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="index.html" style="color: var(--primary);">← Назад на главную</a></p>
+  </footer>
+
+  <script>
+    async function loadMembers() {
+      try {
+        const response = await fetch('members.json');
+        const data = await response.json();
+
+        const list = document.getElementById('membersList');
+        list.innerHTML = '';
+
+        // Лидер
+        const leaderLi = document.createElement('li');
+        leaderLi.textContent = `${data.leader.role}: ${data.leader.name}`;
+        list.appendChild(leaderLi);
+
+        // Админ
+        const adminLi = document.createElement('li');
+        adminLi.textContent = `${data.admin.role}: ${data.admin.name}`;
+        list.appendChild(adminLi);
+
+        // Участники
+        data.members.forEach(member => {
+          const li = document.createElement('li');
+          li.textContent = `${member.role}: ${member.name}`;
+          list.appendChild(li);
+        });
+      } catch (e) {
+        console.error("Ошибка загрузки:", e);
+      }
+    }
+
+    loadMembers();
+  </script>
+</body>
+</html>

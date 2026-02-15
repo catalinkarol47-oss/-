@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ-панель | xXKnightXx</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🔒 Админ-панель клана xXKnightXx</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="rules.html">Правила</a>
+    <a href="members.html">Члены клана</a>
+    <a href="support.html">Поддержка</a>
+  </nav>
+
+  <main>
+    <section class="section animated">
+      <h2>Вход в админ-панель</h2>
+      <div id="loginScreen">
+        <input type="password" id="adminPassword" placeholder="Введите пароль">
+        <button onclick="login()">Войти</button>
+      </div>
+
+      <div id="adminPanel" style="display: none;">
+        <h3>Добавить нового члена клана</h3>
+        <input type="text" id="newMemberName" placeholder="Ник нового члена">
+        <select id="newMemberRole">
+          <option value="Участник">Участник</option>
+          <option value="Админ">Админ</option>
+          <option value="Заместитель">Заместитель</option>
+        </select>
+        <button onclick="addMember()">Добавить</button>
+
+        <h3>Список членов клана</h3>
+        <ul id="memberList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="index.html" style="color: var(--primary);">← Назад на главную</a></p>
+  </footer>
+
+  <script>
+    // Твой пароль из памяти
+    const correctPassword = 'Catalin22245!!!';
+
+    function login() {
+      const input = document.getElementById('adminPassword').value;
+      if (input === correctPassword) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadMembers();
+      } else {
+        alert('Неверный пароль!');
+      }
+    }
+
+    let membersData = {};
+
+    async function loadMembers() {
+      try {
+        const response = await fetch('members.json');
+        membersData = await response.json();
+
+        const list = document.getElementById('memberList');
+        list.innerHTML = '';
+
+        // Выводим лидера
+        const leaderLi = document.createElement('li');
+        leaderLi.textContent = `${membersData.leader.role}: ${membersData.leader.name}`;
+        list.appendChild(leaderLi);
+
+        // Выводим админа
+        const adminLi = document.createElement('li');
+        adminLi.textContent = `${membersData.admin.role}: ${membersData.admin.name}`;
+        list.appendChild(adminLi);
+
+        // Выводим обычных участников
+        membersData.members.forEach((member, i) => {
+          const li = document.createElement('li');
+          li.textContent = `${member.role}: ${member.name}`;
+          const btn = document.createElement('button');
+          btn.textContent = 'Удалить';
+          btn.onclick = () => removeMember(i);
+          li.appendChild(btn);
+          list.appendChild(li);
+        });
+      } catch (e) {
+        console.error("Ошибка загрузки:", e);
+      }
+    }
+
+    function addMember() {
+      const nameInput = document.getElementById('newMemberName');
+      const roleSelect = document.getElementById('newMemberRole');
+      const name = nameInput.value.trim();
+      const role = roleSelect.value;
+
+      if (!name) return;
+
+      membersData.members.push({ name, role });
+      saveMembers();
+      nameInput.value = '';
+      loadMembers();
+    }
+
+    function removeMember(index) {
+      membersData.members.splice(index, 1);
+      saveMembers();
+      loadMembers();
+    }
+
+    async function saveMembers() {
+      // Здесь пока просто показываем, что нужно обновить на GitHub
+      alert('Список обновлён! (скопируй JSON и обнови файл members.json на GitHub)');
+      console.log(membersData);
+    }
+  </script>
+</body>
+</html>
