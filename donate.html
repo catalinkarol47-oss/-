@@ -4,6 +4,66 @@
   <meta charset="UTF-8">
   <title>Поддержать клан | xXKnightXx</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .donate-card {
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      margin: 20px 0;
+      border: 1px solid var(--gray);
+      backdrop-filter: blur(8px);
+    }
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+    .qr-item {
+      text-align: center;
+    }
+    .qr-item img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #1a1a1a;
+      border: 1px dashed var(--light-gray);
+    }
+    .qr-label {
+      margin-top: 12px;
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 18px;
+    }
+    .donor-info {
+      background: rgba(18, 18, 18, 0.8);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      border-left: 4px solid var(--primary);
+    }
+    .donor-info h3 {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .donor-info p {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+    .goals {
+      margin-top: 30px;
+    }
+    .goals h3 {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .goals ul {
+      padding-left: 20px;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -15,8 +75,7 @@
     <a href="rules.html">Правила</a>
     <a href="members.html">Члены клана</a>
     <a href="support.html">Поддержка</a>
-    <a href="donate.html">Донат</a>
-    <a href="admin.html" style="color: #ffcc00;">Админ</a>
+    <a href="donate.html" style="color: #ffcc00;">Донат</a>
   </nav>
 
   <main>
@@ -24,18 +83,58 @@
       <h2>Спасибо за поддержку!</h2>
       <p>Твоя помощь помогает нам развивать клан, улучшать базы и поддерживать активность.</p>
 
-      <div style="text-align: center; margin: 30px 0;">
-        <img src="https://placehold.co/200" alt="QR-код для доната" style="border-radius: 8px;">
-        <p><strong>QR-код для перевода</strong></p>
-        <p>Ссылка для доната: <a href="https://boosty.to/..." target="_blank">boosty.to/...</a></p>
+      <div class="donate-card">
+        <p><strong>Твоя помощь поможет нам:</strong></p>
+        <ul style="margin: 16px 0; text-align: left; max-width: 500px; margin: 0 auto;">
+          <li>Купить VPS для сервера</li>
+          <li>Оплатить премиум на проекте</li>
+          <li>Награды за активность участников</li>
+        </ul>
       </div>
 
-      <h3>Цели донатов:</h3>
-      <ul>
-        <li>Купить VPS для сервера</li>
-        <li>Премиум на проекте</li>
-        <li>Награды за активность</li>
-      </ul>
+      <!-- QR КОДЫ -->
+      <div class="qr-container">
+        <div class="qr-item">
+          <img src="https://raw.githubusercontent.com/catalinkarol47-oss/clan-website/main/Euro-qr.png" 
+               alt="QR код для перевода в евро" width="200" height="200">
+          <div class="qr-label">Для перевода в <strong>Евро</strong></div>
+          <p style="margin-top: 8px; font-size: 14px; opacity: 0.8;">
+            boosty.to/xXKnightXx/euro
+          </p>
+        </div>
+
+        <div class="qr-item">
+          <img src="https://raw.githubusercontent.com/catalinkarol47-oss/clan-website/main/Russia-qr.jpg" 
+               alt="QR код для перевода в рублях" width="200" height="200">
+          <div class="qr-label">Для перевода в <strong>Рублях</strong></div>
+          <p style="margin-top: 8px; font-size: 14px; opacity: 0.8;">
+            boosty.to/xXKnightXx/rub
+          </p>
+        </div>
+      </div>
+
+      <!-- Инфа о донаторах -->
+      <div class="donor-info">
+        <h3>💳 Реквизиты для перевода</h3>
+        <p><strong>Карта Сбербанка (РФ):</strong> 2202 2068 7045 0280</p>
+        <p><strong>Телефон для перевода (СБП):</strong> +7 991 540-39-35</p>
+        <p><strong>Revolut:</strong> @catalin4k</p>
+        <p><strong>Revolut карта (любая валюта):</strong> 5354 5679 3632 1222</p>
+        <p style="margin-top: 12px; font-size: 14px; opacity: 0.7;">
+          При переводе укажи в комментарии: <strong>«Донат xXKnightXx»</strong>
+        </p>
+      </div>
+
+      <!-- Цели -->
+      <div class="goals">
+        <h3>🎯 Цели донатов</h3>
+        <ul>
+          <li>Покупка VPS для сервера Minecraft</li>
+          <li>Премиум-статус на проекте (для всех)</li>
+          <li>Ежемесячные награды за активность</li>
+          <li>Организация турниров и ивентов</li>
+        </ul>
+      </div>
     </section>
   </main>
 
