@@ -15,6 +15,8 @@
     <a href="rules.html">Правила</a>
     <a href="members.html">Члены клана</a>
     <a href="support.html">Поддержка</a>
+    <a href="donate.html">Донат</a>
+    <a href="admin.html" style="color: #ffcc00;">Админ</a>
   </nav>
 
   <main>
@@ -27,7 +29,7 @@
 
       <div id="adminPanel" style="display: none;">
         <h3>Добавить нового члена клана</h3>
-        <input type="text" id="newMemberName" placeholder="Ник нового члена">
+        <input type="text" id="newMemberName" placeholder="Ник">
         <select id="newMemberRole">
           <option value="Участник">Участник</option>
           <option value="Админ">Админ</option>
@@ -46,12 +48,10 @@
   </footer>
 
   <script>
-    // Твой пароль из памяти
-    const correctPassword = 'Catalin22245!!!';
+    const correctPassword = 'Catalin22245!!!'; // ⚠️ Твой пароль — меняй при необходимости
 
     function login() {
-      const input = document.getElementById('adminPassword').value;
-      if (input === correctPassword) {
+      if (document.getElementById('adminPassword').value === correctPassword) {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         loadMembers();
@@ -64,48 +64,33 @@
 
     async function loadMembers() {
       try {
-        const response = await fetch('members.json');
-        membersData = await response.json();
+        const res = await fetch('members.json');
+        membersData = await res.json();
 
         const list = document.getElementById('memberList');
         list.innerHTML = '';
 
-        // Выводим лидера
-        const leaderLi = document.createElement('li');
-        leaderLi.textContent = `${membersData.leader.role}: ${membersData.leader.name}`;
-        list.appendChild(leaderLi);
-
-        // Выводим админа
-        const adminLi = document.createElement('li');
-        adminLi.textContent = `${membersData.admin.role}: ${membersData.admin.name}`;
-        list.appendChild(adminLi);
-
-        // Выводим обычных участников
-        membersData.members.forEach((member, i) => {
-          const li = document.createElement('li');
-          li.textContent = `${member.role}: ${member.name}`;
-          const btn = document.createElement('button');
-          btn.textContent = 'Удалить';
-          btn.onclick = () => removeMember(i);
-          li.appendChild(btn);
-          list.appendChild(li);
+        // Лидер
+        list.innerHTML += `<li>${membersData.leader.role}: ${membersData.leader.name}</li>`;
+        // Админ
+        list.innerHTML += `<li>${membersData.admin.role}: ${membersData.admin.name}</li>`;
+        // Участники
+        membersData.members.forEach((m, i) => {
+          list.innerHTML += `<li>${m.role}: ${m.name} <button onclick="removeMember(${i})">Удалить</button></li>`;
         });
       } catch (e) {
-        console.error("Ошибка загрузки:", e);
+        console.error(e);
       }
     }
 
     function addMember() {
-      const nameInput = document.getElementById('newMemberName');
-      const roleSelect = document.getElementById('newMemberRole');
-      const name = nameInput.value.trim();
-      const role = roleSelect.value;
-
+      const name = document.getElementById('newMemberName').value.trim();
+      const role = document.getElementById('newMemberRole').value;
       if (!name) return;
 
       membersData.members.push({ name, role });
       saveMembers();
-      nameInput.value = '';
+      document.getElementById('newMemberName').value = '';
       loadMembers();
     }
 
@@ -115,10 +100,9 @@
       loadMembers();
     }
 
-    async function saveMembers() {
-      // Здесь пока просто показываем, что нужно обновить на GitHub
-      alert('Список обновлён! (скопируй JSON и обнови файл members.json на GitHub)');
-      console.log(membersData);
+    function saveMembers() {
+      alert('⚠️ Список обновлён! Теперь скопируй JSON ниже и замени файл members.json на GitHub:');
+      console.log(JSON.stringify(membersData, null, 2));
     }
   </script>
 </body>
